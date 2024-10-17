@@ -161,10 +161,38 @@ const getAllProperties = function (options, limit = 10) {
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function (property) {
-  const propertyId = Object.keys(properties).length + 1;
-  property.id = propertyId;
-  properties[propertyId] = property;
-  return Promise.resolve(property);
+  const queryParams = [];
+  let queryString = `
+    INSERT INTO properties (title, description, owner_id, cost_per_night, thumbnail_url, street, city, state, zip, country, parking_spaces)
+    VALUES (
+      $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
+    )
+    RETURNING *;
+  `;
+  queryParams.push(
+    property.title,
+    property.description,
+    property.owner_id,
+    property.cost_per_night * 100, 
+    property.thumbnail_url,
+    property.street,
+    property.city,
+    property.state,
+    property.zip,
+    property.country,
+    property.parking_spaces
+  );
+
+  return pool
+    .query(queryString, queryParams)
+    .then((result) => {
+      console.log(result.rows[0]); 
+      return result.rows[0]; 
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+
 };
 
 module.exports = {
