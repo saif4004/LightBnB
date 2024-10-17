@@ -173,22 +173,20 @@ const addProperty = function (property) {
     RETURNING *;
   `;
 
-  queryParams.push(
-    property.owner_id,
-    property.title,
-    property.description,
-    property.thumbnail_photo_url,
-    property.cover_photo_url,
-    property.cost_per_night * 100,
-    property.street,
-    property.city,
-    property.province,
-    property.post_code,
-    property.country,
-    property.parking_spaces,
-    property.number_of_bathrooms,
-    property.number_of_bedrooms
-  );
+  queryParams.push(property.owner_id);
+  queryParams.push(property.title);
+  queryParams.push(property.description);
+  queryParams.push(property.thumbnail_photo_url);
+  queryParams.push(property.cover_photo_url);
+  queryParams.push(property.cost_per_night * 100);
+  queryParams.push(property.street);
+  queryParams.push(property.city);
+  queryParams.push(property.province);
+  queryParams.push(property.post_code);
+  queryParams.push(property.country);
+  queryParams.push(property.parking_spaces);
+  queryParams.push(property.number_of_bathrooms);
+  queryParams.push(property.number_of_bedrooms);
 
   return pool
     .query(queryString, queryParams)
