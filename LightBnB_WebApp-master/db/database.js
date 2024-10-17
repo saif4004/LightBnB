@@ -173,7 +173,6 @@ const addProperty = function (property) {
     RETURNING *;
   `;
 
-  // Populate the queryParams array with the property values
   queryParams.push(
     property.owner_id,
     property.title,
